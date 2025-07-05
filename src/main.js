@@ -10,8 +10,5 @@ const riveInstance = new rive.Rive({
 
   onLoad: () => {
     riveInstance.resizeDrawingSurfaceToCanvas();
-
-
-    
   },
 });
