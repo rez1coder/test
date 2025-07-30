@@ -2,7 +2,7 @@
 // https://rive.app/community/doc/web-js/docvlgbnS1mp
 
 const riveInstance = new rive.Rive({
-  src: "helloworld.riv",
+  src: "flag.riv",
   canvas: document.getElementById("canvas"),
   autoplay: true,
   artboard: "Artboard",
