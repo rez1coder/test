@@ -23,8 +23,8 @@ const riveInstance = new rive.Rive({
     if (winSide)  winSide.value  = 20;
     if (winFront) winFront.value = 20;
 
-    if (flagType && fireFlag) {
-      flagType.fire();
-    }
+    flagType.fire();
+    setTimeout(() => flagType.fire(), 500);
+    setTimeout(() => flagType.fire(), 1000);
   },
 });
