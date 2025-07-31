@@ -14,11 +14,18 @@ const riveInstance = new rive.Rive({
     const inputs = riveInstance.stateMachineInputs("State Machine 1");
 
     const winSide = inputs.find(i => i.name === "Win Side");
-    const winFront = inputs.find(i => i.name === "Win Front");
-    const flagType = inputs.find(i => i.name === "Flag Type");
+    const winFront = inputs.find(i => i.name === "Win front");
+    const flagType = inputs.find(i => i.name === "Flag type");
 
     if (winSide)  winSide.value  = 20;
     if (winFront) winFront.value = 20;
-    if (flagType) flagType.fire();
+    // if (flagType) flagType.fire();
+    
+    if (flagType) {
+        console.log("Firing Flag Type trigger");
+        flagType.fire();
+    } else {
+        console.error("Trigger 'Flag Type' not found!");
+    }
   },
 });
