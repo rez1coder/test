@@ -19,9 +19,5 @@ const riveInstance = new rive.Rive({
 
     if (winSide)  winSide.value  = 20;
     if (winFront) winFront.value = 20;
-
-    flagType.fire();
-    setTimeout(() => flagType.fire(), 1000);
-    setTimeout(() => flagType.fire(), 2000);
   },
 });
