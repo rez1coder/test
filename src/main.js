@@ -1,9 +1,6 @@
 // This is the High level JS runtime for Rive
 // https://rive.app/community/doc/web-js/docvlgbnS1mp
 
-const params = new URLSearchParams(window.location.search);
-const fireFlag = params.get("flag");
-
 const riveInstance = new rive.Rive({
   src: "flag.riv",
   canvas: document.getElementById("canvas"),
@@ -24,7 +21,7 @@ const riveInstance = new rive.Rive({
     if (winFront) winFront.value = 20;
 
     flagType.fire();
-    setTimeout(() => flagType.fire(), 500);
     setTimeout(() => flagType.fire(), 1000);
+    setTimeout(() => flagType.fire(), 2000);
   },
 });
