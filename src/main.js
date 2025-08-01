@@ -20,25 +20,21 @@ riveInstance = new rive.Rive({
 
     winSide.value = 20;
     winFront.value = 20;
-  },
-});
 
-// Event listener outside onLoad
-client.on('General.Custom', (payload) => {
-    if (payload.data.event === 'changeFlag') {
-        const flags = payload.data.flag;
+    // Move the event listener setup here, after inputs are loaded
+    client.on('General.Custom', (payload) => {
+        console.log('Custom event received:', payload);
+        if (payload.data.event === 'changeFlag') {
+            const flags = payload.data.flag;
 
-        if (flags === 'First' || flags === 'Second' || flags === 'Third') {
-            // Check if flagType is loaded before firing
-            if (flagType) {
+            if (flags === 'First' || flags === 'Second' || flags === 'Third') {
                 console.log('Firing flagType trigger'); // Debug log
                 flagType.fire();
-            } else {
-                console.log('flagType not loaded yet'); // Debug log
+            }
+            else if (flags === 'hide') {
+                document.getElementById('canvas').style.display = 'none';
             }
         }
-        else if (flags === 'hide') {
-            document.getElementById('canvas').style.display = 'none';
-        }
-    }
+    });
+  },
 });
