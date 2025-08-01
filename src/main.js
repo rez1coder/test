@@ -16,25 +16,30 @@ riveInstance = new rive.Rive({
     inputs = riveInstance.stateMachineInputs("State Machine 1");
     winSide = inputs.find(i => i.name === "Win Side");
     winFront = inputs.find(i => i.name === "Win front");
-    flagType = inputs.find(i => i.name === "Flag type");
 
     winSide.value = 20;
     winFront.value = 20;
+  },
+});
 
-    // Move the event listener setup here, after inputs are loaded
-    client.on('General.Custom', (payload) => {
-        console.log('Custom event received:', payload);
-        if (payload.data.event === 'changeFlag') {
-            const flags = payload.data.flag;
+// Event listener outside onLoad
+client.on('General.Custom', (payload) => {
+    if (payload.data.event === 'changeFlag') {
+        inputs = riveInstance.stateMachineInputs("State Machine 1");
+        flagType = inputs.find(i => i.name === "Flag type");
 
-            if (flags === 'First' || flags === 'Second' || flags === 'Third') {
+        const flags = payload.data.flag;
+
+        if (flags === 'First' || flags === 'Second' || flags === 'Third') {
+            if (flagType) {
                 console.log('Firing flagType trigger'); // Debug log
                 flagType.fire();
-            }
-            else if (flags === 'hide') {
-                document.getElementById('canvas').style.display = 'none';
+            } else {
+                console.log('flagType not loaded yet'); // Debug log
             }
         }
-    });
-  },
+        else if (flags === 'hide') {
+            document.getElementById('canvas').style.display = 'none';
+        }
+    }
 });
