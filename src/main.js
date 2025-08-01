@@ -1,8 +1,7 @@
 const client = new StreamerbotClient();
 
 let riveInstance;
-let inputs;
-let winSide, winFront, flagType;
+let inputs, winSide, winFront, flagType;
 
 riveInstance = new rive.Rive({
   src: "flag.riv",
@@ -14,7 +13,6 @@ riveInstance = new rive.Rive({
   onLoad: () => {
     riveInstance.resizeDrawingSurfaceToCanvas();
 
-    // Store inputs in variables accessible outside onLoad
     inputs = riveInstance.stateMachineInputs("State Machine 1");
     winSide = inputs.find(i => i.name === "Win Side");
     winFront = inputs.find(i => i.name === "Win front");
@@ -25,13 +23,19 @@ riveInstance = new rive.Rive({
   },
 });
 
-// Listen for Streamer.bot events outside onLoad
+// Event listener outside onLoad
 client.on('General.Custom', (payload) => {
     if (payload.data.event === 'changeFlag') {
         const flags = payload.data.flag;
 
         if (flags === 'First' || flags === 'Second' || flags === 'Third') {
-            flagType?.fire(); // Use optional chaining in case inputs aren't loaded yet
+            // Check if flagType is loaded before firing
+            if (flagType) {
+                console.log('Firing flagType trigger'); // Debug log
+                flagType.fire();
+            } else {
+                console.log('flagType not loaded yet'); // Debug log
+            }
         }
         else if (flags === 'hide') {
             document.getElementById('canvas').style.display = 'none';
