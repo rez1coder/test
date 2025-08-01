@@ -15,8 +15,8 @@ const riveInstance = new rive.Rive({
     const winFront = inputs.find(i => i.name === "Win front");
     const flagType = inputs.find(i => i.name === "Flag type");
 
-    if (winSide)  winSide.value  = 20;
-    if (winFront) winFront.value = 20;
+    winSide.value  = 20;
+    winFront.value = 20;
 
     // Listen for Streamer.bot events
     client.on('General.Custom', (payload) => {
@@ -24,12 +24,10 @@ const riveInstance = new rive.Rive({
             const flags = payload.data.flag;
 
             if (flags === 'First' || flags === 'Second' || flags === 'Third') {
-                if (flagType) flagType.fire();
+                flagType.fire();
             }
-
-            if (flags === 'hide') {
-                const canvas = document.getElementById('canvas');
-                canvas.style.display = 'none';
+            else if (flags === 'hide') {
+                document.getElementById('canvas').style.display = 'none';
             }
         }
     });
