@@ -27,7 +27,7 @@ const riveInstance = new rive.Rive({
         if (payload.data.event === 'changeFlag') {
             const eventValue = payload.data.value;
 
-            if (eventValue === 'first' || eventValue === 'second' || eventValue === 'third') {
+            if (eventValue === 'First' || eventValue === 'Second' || eventValue === 'Third') {
                 // Fire the Rive trigger when the event occurs
                 if (flagType) flagType.fire();
             }
