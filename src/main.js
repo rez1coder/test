@@ -22,12 +22,13 @@ const riveInstance = new rive.Rive({
 // Event listener outside onLoad
 client.on('General.Custom', (payload) => {   
     if (payload.data.event === 'changeFlag') {
-        console.log(payload);
+        console.log(payload.data);
         const flags = payload.data.flag;
 
         if (flags === 'First' || flags === 'Second' || flags === 'Third') {
             // Simulate a click event
             document.getElementById('canvas').click();
+            console.log(clicked);
         } else if (flags === 'hide') {
             document.getElementById('canvas').style.display = 'none';
         }
