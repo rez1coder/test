@@ -32,7 +32,6 @@ function handleFlagChange(flagName) {
     switch (flagName) {
     case 'First':
         toggleCanvas(true);
-        flagType.fire();
         break;
 
     case 'Second':
@@ -43,6 +42,7 @@ function handleFlagChange(flagName) {
         flagType.fire();
         setTimeout(() => {
             toggleCanvas(false);
+            flagType.fire();
             console.log("Canvas hidden after 5s");
         }, 5000);
         break;
