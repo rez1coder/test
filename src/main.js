@@ -31,7 +31,6 @@ function simulateFlagChange(flagName) {
   window.dispatchEvent(event);
 }
 
-<<<<<<< HEAD
 // ========== Event Listener ==========
 window.addEventListener('General.Custom', (e) => {
   const payload = e.detail;
@@ -56,15 +55,6 @@ window.addEventListener('General.Custom', (e) => {
         
       default:
         console.log("Unknown flag:", payload.flag);
-=======
-        if (flags === 'First' || flags === 'Second' || flags === 'Third') {
-            // Simulate a click event
-            document.getElementById('canvas').click();
-            console.log("clicked");
-        } else if (flags === 'hide') {
-            document.getElementById('canvas').style.display = 'none';
-        }
->>>>>>> a14256f22866a3a7fad3ab4b9229e35706362c98
     }
   }
 });
