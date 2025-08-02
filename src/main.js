@@ -28,7 +28,7 @@ client.on('General.Custom', (payload) => {
         if (flags === 'First' || flags === 'Second' || flags === 'Third') {
             // Simulate a click event
             document.getElementById('canvas').click();
-            console.log(clicked);
+            console.log("clicked");
         } else if (flags === 'hide') {
             document.getElementById('canvas').style.display = 'none';
         }
