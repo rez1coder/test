@@ -1,10 +1,11 @@
+// Initialize Rive animation
 const riveInstance = new rive.Rive({
   src: "flag.riv",
   canvas: document.getElementById("canvas"),
   autoplay: true,
   artboard: "Artboard",
   stateMachines: "State Machine 1",
-
+  
   onLoad: () => {
     console.log("Rive animation loaded!");
     riveInstance.resizeDrawingSurfaceToCanvas();
@@ -18,52 +19,53 @@ const riveInstance = new rive.Rive({
   },
 });
 
-function simulateFlagChange(flagName) {
-  const event = new CustomEvent('General.Custom', {
-    detail: {
-      event: 'changeFlag',
-      flag: flagName
-    }
-  });
-  window.dispatchEvent(event);
-}
+// Streamer.bot client connection
+const client = new StreamerbotClient();
 
-window.addEventListener('General.Custom', (e) => {
-  const payload = e.detail;
-  console.log("Received event:", payload);
-
+// Listen for custom events from Streamer.bot
+client.on('General.Custom', (payload) => {
+  console.log("Received Streamer.bot event:", payload);
+  
   if (payload.event === 'changeFlag') {
-    console.log(`Flag changed to: ${payload.flag}`);
-    
-    switch (payload.flag) {
-      case 'First':
-      case 'Second':
-      case 'Third':
-        // document.getElementById('canvas').click();
-        // console.log("Triggered animation click");
-        const inputs = riveInstance.stateMachineInputs("State Machine 1");
-        const flagType = inputs.find(i => i.name === "Flag type"); // Replace with your input name
-        
-        if (flagType) {
-          flagType.fire(); // Manually fire the trigger
-          console.log("Rive input triggered directly");
-        } else {
-          console.error("Trigger input not found in Rive animation");
-        }
-        break;
-        
-      case 'hide':
-        document.getElementById('canvas').style.display = 'none';
-        console.log("Canvas hidden");
-        break;
-
-      case 'show':
-        document.getElementById('canvas').style.display = 'block';
-        console.log("Canvas shown");
-        break;
-        
-      default:
-        console.log("Unknown flag:", payload.flag);
-    }
+    handleFlagChange(payload.flag);
   }
 });
+
+// Handle flag changes
+function handleFlagChange(flagName) {
+  console.log(`Flag changed to: ${flagName}`);
+  
+  switch (flagName) {
+    case 'First':
+    case 'Second':
+    case 'Third':
+      const inputs = riveInstance.stateMachineInputs("State Machine 1");
+      const flagType = inputs.find(i => i.name === "Flag type");
+      
+      if (flagType) {
+        flagType.fire();
+        console.log("Rive input triggered directly");
+      } else {
+        console.error("Trigger input not found in Rive animation");
+      }
+      break;
+      
+    case 'hide':
+      document.getElementById('canvas').style.display = 'none';
+      console.log("Canvas hidden");
+      break;
+
+    case 'show':
+      document.getElementById('canvas').style.display = 'block';
+      console.log("Canvas shown");
+      break;
+      
+    default:
+      console.log("Unknown flag:", flagName);
+  }
+}
+
+// Optional: Keep the simulate function for local testing
+function simulateFlagChange(flagName) {
+  handleFlagChange(flagName);
+}
