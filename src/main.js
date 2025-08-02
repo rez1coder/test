@@ -19,13 +19,6 @@ const riveInstance = new rive.Rive({
   },
 });
 
-const payload = {
-    data: {
-        event: 'changeFlag',
-        flag: 'First'
-    }
-};
-
 // Event listener outside onLoad
 client.on('General.Custom', (payload) => {   
     if (payload.data.event === 'changeFlag') {
