@@ -1,26 +1,23 @@
-// ========== Rive Animation Setup ==========
 const riveInstance = new rive.Rive({
-  src: "flag.riv", // Make sure this path is correct
+  src: "flag.riv",
   canvas: document.getElementById("canvas"),
   autoplay: true,
   artboard: "Artboard",
   stateMachines: "State Machine 1",
+
   onLoad: () => {
     console.log("Rive animation loaded!");
     riveInstance.resizeDrawingSurfaceToCanvas();
 
-    // Set initial values for inputs (if needed)
     const inputs = riveInstance.stateMachineInputs("State Machine 1");
     const winSide = inputs.find(i => i.name === "Win Side");
     const winFront = inputs.find(i => i.name === "Win front");
     
-    if (winSide) winSide.value = 20;
-    if (winFront) winFront.value = 20;
+    winSide.value = 20;
+    winFront.value = 20;
   },
 });
 
-// ========== Event Simulation ==========
-// Simulate a Streamer.bot "changeFlag" event
 function simulateFlagChange(flagName) {
   const event = new CustomEvent('General.Custom', {
     detail: {
@@ -31,7 +28,6 @@ function simulateFlagChange(flagName) {
   window.dispatchEvent(event);
 }
 
-// ========== Event Listener ==========
 window.addEventListener('General.Custom', (e) => {
   const payload = e.detail;
   console.log("Received event:", payload);
@@ -43,14 +39,27 @@ window.addEventListener('General.Custom', (e) => {
       case 'First':
       case 'Second':
       case 'Third':
-        // Trigger animation by simulating click
-        document.getElementById('canvas').click();
-        console.log("Triggered animation click");
+        // document.getElementById('canvas').click();
+        // console.log("Triggered animation click");
+        const inputs = riveInstance.stateMachineInputs("State Machine 1");
+        const flagType = inputs.find(i => i.name === "Flag type"); // Replace with your input name
+        
+        if (flagType) {
+          flagType.fire(); // Manually fire the trigger
+          console.log("Rive input triggered directly");
+        } else {
+          console.error("Trigger input not found in Rive animation");
+        }
         break;
         
       case 'hide':
         document.getElementById('canvas').style.display = 'none';
         console.log("Canvas hidden");
+        break;
+
+      case 'show':
+        document.getElementById('canvas').style.display = 'block';
+        console.log("Canvas shown");
         break;
         
       default:
@@ -58,30 +67,3 @@ window.addEventListener('General.Custom', (e) => {
     }
   }
 });
-
-// ========== Test Controls ==========
-// Call these functions to test different scenarios
-function testFirstFlag() {
-  simulateFlagChange('First');
-}
-
-function testSecondFlag() {
-  simulateFlagChange('Second');
-}
-
-function testHide() {
-  simulateFlagChange('hide');
-}
-
-function testShow() {
-  document.getElementById('canvas').style.display = 'block';
-  console.log("Canvas shown");
-}
-
-// ========== Run Initial Tests ==========
-// Uncomment to auto-test when page loads
-// setTimeout(() => {
-//   testFirstFlag();
-//   setTimeout(testHide, 2000);
-//   setTimeout(testShow, 4000);
-// }, 1000);
